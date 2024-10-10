@@ -1,0 +1,52 @@
+version: V1.0.0
+
+#web服务器
+web:
+  port: 8080
+  mode: release # debug,release,test
+  token: false # 开启token验证
+
+# 系统总数据库，存储公共数据；推荐使用mysql
+db:
+  driver: mysql
+  url: 192.168.2.22
+  userName: root
+  password: root
+  dbname: test # 如果库不存在,系统会根据库名称创建新库,并生成系统表
+  port: 3306
+  maxIdleConns: 200 #最大空闲连接数
+  maxOpenConns: 150 #最大进行连接数
+  logLevel: 2 #sql日志级别  1:slient 2:error 3:warn 4:info
+
+# 异步上链，kafka消息队列
+kafka:
+  topic: sdk-client #主题
+  groupID: sdk #消费者组
+  ip: 192.168.1.16 #地址
+  port: 9092 #端口
+
+redis:
+  ip: 192.168.1.16
+  port: 6379
+  password: 123456
+  db: 0
+
+# 日志
+logger:
+  logLevel: info #日志级别 debug < info < warm < error < panic < fatal
+  fileName: log/xinhe-sdk.log #日志输出文件
+  maxSize: 100 #单个文件大小，单位：MB
+  maxAge: 30 #保留文件天数
+  maxBackups: 30 #保留文件数量
+  compress: false #压缩
+
+#证书文件上传服务配置
+oss:
+  name: minio
+  enabled: true
+  endpoint: 192.168.1.147:9000
+  accessKey: minioadmin
+  secretKey: minioadmin
+  # 自定义一个bucketName, 否则默认xinhe桶
+  bucketName: certificate
+  fileType: .png
