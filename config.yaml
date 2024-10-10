@@ -20,8 +20,8 @@ db:
 
 # 异步上链，kafka消息队列
 kafka:
-  topic: sdk-client #主题
-  groupID: sdk #消费者组
+  topic: test #主题
+  groupID: testGroup1 #消费者组
   ip: 192.168.1.16 #地址
   port: 9092 #端口
 
@@ -48,6 +48,5 @@ oss:
   endpoint: 192.168.1.147:9000
   accessKey: minioadmin
   secretKey: minioadmin
-  # 自定义一个bucketName, 否则默认xinhe桶
-  bucketName: certificate
+  bucketName: test  # 自定义一个bucketName
   fileType: .png
