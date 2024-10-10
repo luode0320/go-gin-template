@@ -1,9 +1,11 @@
 package log
 
 import (
+	"go-gin-template/config"
 	"log"
 	"os"
 	"path/filepath"
+	"strings"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -16,24 +18,13 @@ var Logger *zap.SugaredLogger
 
 // LogConfig 用于配置日志参数
 type LogConfig struct {
-	Level          zapcore.Level `yaml:"level"`           // 日志等级
+	Level          zapcore.Level `yaml:"level"`           // 日志等级: -1:debug < 0:info < 1:warm < 2:error < 3:panic
 	LogFilePath    string        `yaml:"log_file_path"`   // 日志文件路径
 	MaxSize        int           `yaml:"max_size"`        // 单个文件的最大大小（单位：MB）
 	MaxAge         int           `yaml:"max_age"`         // 文件最大保留时间（单位：天）
 	MaxBackups     int           `yaml:"max_backups"`     // 最多保留的备份文件数量
 	Compress       bool          `yaml:"compress"`        // 是否压缩旧的日志文件
 	DisableConsole bool          `yaml:"disable_console"` // 是否禁用控制台输出
-}
-
-// 日志配置: 可以移动到配置文件
-var logConfig = LogConfig{
-	Level:          zap.InfoLevel,
-	LogFilePath:    filepath.Join("app.log"),
-	MaxSize:        10, // 10 MB
-	MaxAge:         7,  // 7 days
-	MaxBackups:     5,  // 5 backup files
-	Compress:       true,
-	DisableConsole: false,
 }
 
 // 设置 zap 日志记录器
@@ -70,7 +61,15 @@ func setupZapLogger(config *LogConfig) (*zap.Logger, error) {
 // CustomLogger 自定义日志中间件
 func CustomLogger() gin.HandlerFunc {
 	// 初始化 zap 日志记录器
-	logger, err := setupZapLogger(&logConfig)
+	logger, err := setupZapLogger(&LogConfig{
+		Level:          zapcore.Level(config.ServiceConfig.Logger.LogLevel),
+		LogFilePath:    filepath.Join(strings.Split(strings.ReplaceAll(strings.ReplaceAll(config.ServiceConfig.Logger.FileName, "/", ","), "\\", ","), ",")...),
+		MaxSize:        config.ServiceConfig.Logger.MaxSize,
+		MaxAge:         config.ServiceConfig.Logger.MaxAge,
+		MaxBackups:     config.ServiceConfig.Logger.MaxBackups,
+		Compress:       config.ServiceConfig.Logger.Compress,
+		DisableConsole: config.ServiceConfig.Logger.DisableConsole,
+	})
 	if err != nil {
 		log.Fatalf("Failed to initialize zap logger: %v", err)
 	}

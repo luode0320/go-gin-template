@@ -43,12 +43,13 @@ type DbCfg struct {
 }
 
 type LoggerCfg struct {
-	LogLevel   string `yaml:"logLevel"`
-	FileName   string `yaml:"fileName"`
-	MaxSize    int    `yaml:"maxSize"`
-	MaxAge     int    `yaml:"maxAge"`
-	MaxBackups int    `yaml:"maxBackups"`
-	Compress   bool   `yaml:"compress"`
+	LogLevel       int    `yaml:"logLevel"`
+	FileName       string `yaml:"fileName"`
+	MaxSize        int    `yaml:"maxSize"`
+	MaxAge         int    `yaml:"maxAge"`
+	MaxBackups     int    `yaml:"maxBackups"`
+	Compress       bool   `yaml:"compress"`
+	DisableConsole bool   `yaml:"disableConsole"`
 }
 
 // RedisCfg redis配置

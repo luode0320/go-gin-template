@@ -33,12 +33,13 @@ redis:
 
 # 日志
 logger:
-  logLevel: info #日志级别 debug < info < warm < error < panic < fatal
-  fileName: log/xinhe-sdk.log #日志输出文件
+  logLevel: 0 #日志级别 -1:debug < 0:info < 1:warm < 2:error < 3:panic
+  fileName: log/app.log #日志输出文件
   maxSize: 100 #单个文件大小，单位：MB
   maxAge: 30 #保留文件天数
   maxBackups: 30 #保留文件数量
   compress: false #压缩
+  disableConsole: false # 是否禁用控制台输出
 
 #证书文件上传服务配置
 oss:
