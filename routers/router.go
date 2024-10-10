@@ -28,7 +28,7 @@ func SetupRouter() *gin.Engine {
 		userCtrl1 := &controllers.UserController{}
 		api1.GET("/users", userCtrl1.GetUsers)
 		api1.GET("/users/:id", userCtrl1.GetUser)
-		api1.POST("/users", valid.ValidateForm(new(db.User)), userCtrl1.CreateUser) // 添加验证json参数中间件
+		api1.POST("/users/create", valid.ValidateForm(new(db.User)), userCtrl1.CreateUser) // 添加验证json参数中间件
 	}
 
 	// 版本 2 的路由
@@ -38,7 +38,7 @@ func SetupRouter() *gin.Engine {
 		userCtrl2 := &controllers.UserController{}
 		api2.GET("/users", userCtrl2.GetUsers)
 		api2.GET("/users/:id", userCtrl2.GetUser)
-		api2.POST("/users", valid.ValidateForm(new(db.User)), userCtrl2.CreateUser) // 添加验证json参数中间件
+		api2.POST("/users/create", valid.ValidateForm(new(db.User)), userCtrl2.CreateUser) // 添加验证json参数中间件
 	}
 
 	return router

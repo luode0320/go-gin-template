@@ -15,13 +15,13 @@ var service = services.UserService{}
 
 func (uc *UserController) GetUsers(c *gin.Context) {
 	users := service.GetUsers()
-	c.JSON(http.StatusOK, users)
+	c.JSON(http.StatusOK, response.Data(users))
 }
 
 func (uc *UserController) GetUser(c *gin.Context) {
 	id := c.Param("id")
 	user := service.GetUser(id)
-	c.JSON(http.StatusOK, user)
+	c.JSON(http.StatusOK, response.Data(user))
 }
 
 func (uc *UserController) CreateUser(c *gin.Context) {
