@@ -11,7 +11,8 @@ import (
 	"time"
 )
 
-const cacheKey = "cache::"     // 缓存前缀
+// CacheKey 缓存前缀
+const CacheKey = "cache::"
 const expire = 1 * time.Minute // 缓存时间
 
 var ctx = context.Background()
@@ -19,7 +20,7 @@ var ctx = context.Background()
 // Cache 缓存中间件
 func Cache() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		key := cacheKey + c.Request.URL.Path // 生成缓存键
+		key := CacheKey + c.Request.URL.Path // 生成缓存键
 
 		// 从缓存中读取结果
 		cachedResult, err := redis.Rdb.Get(ctx, key).Result()

@@ -4,8 +4,8 @@ package controllers
 import (
 	"github.com/gin-gonic/gin"
 	"go-gin-template/common/response"
-	"go-gin-template/model"
-	"go-gin-template/services"
+	"go-gin-template/routers/model"
+	"go-gin-template/routers/services"
 	"net/http"
 )
 

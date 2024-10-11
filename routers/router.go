@@ -3,13 +3,13 @@ package routers
 
 import (
 	"github.com/gin-gonic/gin"
-	"go-gin-template/controllers"
 	"go-gin-template/middleware/cache"
 	"go-gin-template/middleware/cors"
 	"go-gin-template/middleware/log"
 	"go-gin-template/middleware/request_timeout"
 	"go-gin-template/middleware/validator"
-	"go-gin-template/model"
+	"go-gin-template/routers/controllers"
+	"go-gin-template/routers/model"
 )
 
 // SetupRouter 设置gin路由
