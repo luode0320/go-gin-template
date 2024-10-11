@@ -9,8 +9,8 @@ import (
 func Cors() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// 设置允许的来源
-		c.Writer.Header().Set("Access-Control-Allow-Origin", "*") // 或者指定允许的域名
-		c.Writer.Header().Set("Access-Control-Allow-Credentials", "true")
+		c.Writer.Header().Set("Access-Control-Allow-Origin", "*")         // 或者指定允许的域名
+		c.Writer.Header().Set("Access-Control-Allow-Credentials", "true") // 允许携带 cookie 和 HTTP 认证信息
 		c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With")
 		c.Writer.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS, GET, PUT, DELETE")
 

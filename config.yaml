@@ -8,7 +8,7 @@ web:
 
 # 系统总数据库，存储公共数据；推荐使用mysql
 db:
-  driver: mysql
+  driver: db
   url: 192.168.2.22
   userName: root
   password: root
@@ -26,7 +26,7 @@ kafka:
   port: 9092 #端口
 
 redis:
-  ip: 192.168.1.16
+  ip: 192.168.2.22
   port: 6379
   password: 123456
   db: 0
@@ -35,7 +35,7 @@ redis:
 logger:
   logLevel: 0 #日志级别 -1:debug < 0:info < 1:warm < 2:error < 3:panic
   fileName: log/app.log #日志输出文件
-  maxSize: 100 #单个文件大小，单位：MB
+  maxSize: 2 #单个文件大小，单位：MB
   maxAge: 30 #保留文件天数
   maxBackups: 30 #保留文件数量
   compress: false #压缩

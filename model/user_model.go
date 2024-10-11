@@ -1,5 +1,5 @@
 // models/user_model.go
-package db
+package model
 
 import (
 	"gorm.io/gorm"

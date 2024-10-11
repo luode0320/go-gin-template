@@ -3,23 +3,24 @@ package services
 
 import (
 	_ "github.com/mattn/go-sqlite3"
-	"go-gin-template/db"
+	"go-gin-template/config/db"
+	"go-gin-template/model"
 )
 
 type UserService struct{}
 
-func (uc *UserService) GetUsers() []db.User {
-	var users []db.User
-	db.DB.Find(&users)
+func (uc *UserService) GetUsers() []model.User {
+	var users []model.User
+	db.Conn.Find(&users)
 	return users
 }
 
-func (uc *UserService) GetUser(id string) db.User {
-	var user db.User
-	db.DB.First(&user, id)
+func (uc *UserService) GetUser(id string) model.User {
+	var user model.User
+	db.Conn.First(&user, id)
 	return user
 }
 
-func (uc *UserService) CreateUser(user *db.User) {
-	db.DB.Create(&user)
+func (uc *UserService) CreateUser(user *model.User) {
+	db.Conn.Create(&user)
 }

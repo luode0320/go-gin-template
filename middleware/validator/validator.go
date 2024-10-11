@@ -4,7 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
 	"go-gin-template/common/response"
-	"go-gin-template/middleware/log"
+	"go-gin-template/config/log"
 	"net/http"
 )
 

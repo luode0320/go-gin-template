@@ -55,9 +55,9 @@ type LoggerCfg struct {
 // RedisCfg redis配置
 type RedisCfg struct {
 	Ip       string `yaml:"ip"`
-	Port     int    `yaml:"port"`
-	Db       int    `yaml:"db"`
+	Port     string `yaml:"port"`
 	Password string `yaml:"password"`
+	Db       int    `yaml:"db"`
 }
 
 type KafkaCfg struct {

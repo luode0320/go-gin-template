@@ -1,17 +1,14 @@
 package log
 
 import (
+	"github.com/natefinch/lumberjack"
 	"go-gin-template/config"
+	"go.uber.org/zap"
+	"go.uber.org/zap/zapcore"
 	"log"
 	"os"
 	"path/filepath"
 	"strings"
-	"time"
-
-	"github.com/gin-gonic/gin"
-	"github.com/natefinch/lumberjack"
-	"go.uber.org/zap"
-	"go.uber.org/zap/zapcore"
 )
 
 var Logger *zap.SugaredLogger
@@ -25,6 +22,24 @@ type LogConfig struct {
 	MaxBackups     int           `yaml:"max_backups"`     // 最多保留的备份文件数量
 	Compress       bool          `yaml:"compress"`        // 是否压缩旧的日志文件
 	DisableConsole bool          `yaml:"disable_console"` // 是否禁用控制台输出
+}
+
+func InitLogger() {
+	// 初始化 zap 日志记录器
+	logger, err := setupZapLogger(&LogConfig{
+		Level:          zapcore.Level(config.ServiceConfig.Logger.LogLevel),
+		LogFilePath:    filepath.Join(strings.Split(strings.ReplaceAll(strings.ReplaceAll(config.ServiceConfig.Logger.FileName, "/", ","), "\\", ","), ",")...),
+		MaxSize:        config.ServiceConfig.Logger.MaxSize,
+		MaxAge:         config.ServiceConfig.Logger.MaxAge,
+		MaxBackups:     config.ServiceConfig.Logger.MaxBackups,
+		Compress:       config.ServiceConfig.Logger.Compress,
+		DisableConsole: config.ServiceConfig.Logger.DisableConsole,
+	})
+	if err != nil {
+		log.Fatalf("Failed to initialize zap logger: %v", err)
+	}
+
+	Logger = logger.Sugar()
 }
 
 // 设置 zap 日志记录器
@@ -53,53 +68,10 @@ func setupZapLogger(config *LogConfig) (*zap.Logger, error) {
 		zapcore.NewCore(encoder, zapcore.AddSync(os.Stdout), lvl),
 	)
 	// 创建 zap.Logger 实例
-	logger := zap.New(core, zap.AddCaller(), zap.AddCallerSkip(1))
-	Logger = logger.Sugar()
-	return logger, nil
-}
-
-// CustomLogger 自定义日志中间件
-func CustomLogger() gin.HandlerFunc {
-	// 初始化 zap 日志记录器
-	logger, err := setupZapLogger(&LogConfig{
-		Level:          zapcore.Level(config.ServiceConfig.Logger.LogLevel),
-		LogFilePath:    filepath.Join(strings.Split(strings.ReplaceAll(strings.ReplaceAll(config.ServiceConfig.Logger.FileName, "/", ","), "\\", ","), ",")...),
-		MaxSize:        config.ServiceConfig.Logger.MaxSize,
-		MaxAge:         config.ServiceConfig.Logger.MaxAge,
-		MaxBackups:     config.ServiceConfig.Logger.MaxBackups,
-		Compress:       config.ServiceConfig.Logger.Compress,
-		DisableConsole: config.ServiceConfig.Logger.DisableConsole,
-	})
-	if err != nil {
-		log.Fatalf("Failed to initialize zap logger: %v", err)
-	}
-
-	return func(c *gin.Context) {
-		startTime := time.Now()
-
-		c.Next()
-
-		endTime := time.Now()
-
-		method := c.Request.Method
-		path := c.Request.URL.Path
-		statusCode := c.Writer.Status()
-		duration := endTime.Sub(startTime)
-
-		// 使用结构化日志记录请求信息
-		logger.Info("请求信息:",
-			zap.String("method", method),
-			zap.String("URL", path),
-			zap.Int("状态码", statusCode),
-			zap.Float64("持续时间(s)", duration.Seconds()),
-		)
-	}
+	return zap.New(core, zap.AddCaller(), zap.AddCallerSkip(1)), nil
 }
 
 // Debug 输出debug 级别的日志
-//
-// @Author: zhaoruobo
-// @Date: 2023/9/26
 func Debug(message string) {
 	Logger.Debug(message)
 }

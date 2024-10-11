@@ -4,7 +4,7 @@ package controllers
 import (
 	"github.com/gin-gonic/gin"
 	"go-gin-template/common/response"
-	"go-gin-template/db"
+	"go-gin-template/model"
 	"go-gin-template/services"
 	"net/http"
 )
@@ -25,7 +25,7 @@ func (uc *UserController) GetUser(c *gin.Context) {
 }
 
 func (uc *UserController) CreateUser(c *gin.Context) {
-	user := c.MustGet("form").(*db.User)
+	user := c.MustGet("form").(*model.User)
 	service.CreateUser(user)
 	c.JSON(http.StatusCreated, response.Data(user))
 }
