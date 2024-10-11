@@ -5,6 +5,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"go-gin-template/controllers"
 	"go-gin-template/db"
+	"go-gin-template/middleware/cors"
 	"go-gin-template/middleware/log"
 	"go-gin-template/middleware/request_timeout"
 	"go-gin-template/middleware/validator"
@@ -18,6 +19,8 @@ func SetupRouter() *gin.Engine {
 	router.Use(log.CustomLogger())
 	// 创建请求超时时间中间件
 	router.Use(request_timeout.RequestTimeout())
+	// 跨域 CORS 中间件
+	router.Use(cors.Cors())
 	// 创建验证器中间件实例
 	valid := validator.NewFormValidator()
 
