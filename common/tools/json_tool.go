@@ -12,7 +12,7 @@ import (
 func Json(context interface{}) string {
 	jsonByte, err := json.Marshal(context)
 	if err != nil {
-		log.Errorf("转换为JSON字符串失败 -> [%s]", err.Error())
+		log.Errorf("转换为JSON字符串失败: %s", err.Error())
 		return ""
 	}
 
@@ -32,14 +32,14 @@ func JsonFmt(context string) string {
 	var jsonData interface{}
 	err := json.Unmarshal([]byte(context), &jsonData)
 	if err != nil {
-		log.Errorf("解析JSON字符串失败:", err)
+		log.Errorf("解析JSON字符串失败: %s", err.Error())
 		return ""
 	}
 
 	// 格式化JSON字符串为带缩进的JSON字符串
 	indentedJSON, err := json.MarshalIndent(jsonData, "", "  ")
 	if err != nil {
-		log.Errorf("格式化JSON字符串失败:", err)
+		log.Errorf("格式化JSON字符串失败: %s", err.Error())
 		return ""
 	}
 
@@ -53,7 +53,7 @@ func JsonMap(context string) map[string]interface{} {
 		return data
 	}
 	if err := json.Unmarshal([]byte(context), &data); err != nil {
-		log.Errorf("解析JSON失败 -> [%s]", err.Error())
+		log.Errorf("解析JSON失败: %s", err.Error())
 		return nil
 	}
 	return data
@@ -66,7 +66,7 @@ func JsonMapString(context string) map[string]string {
 		return data
 	}
 	if err := json.Unmarshal([]byte(context), &data); err != nil {
-		log.Errorf("解析JSON失败 -> [%s]", err.Error())
+		log.Errorf("解析JSON失败: %s", err.Error())
 		return nil
 	}
 	return data
@@ -79,7 +79,7 @@ func JsonMapArray(context string) []map[string]interface{} {
 		return data
 	}
 	if err := json.Unmarshal([]byte(context), &data); err != nil {
-		log.Errorf("解析JSON失败 -> [%s]", err.Error())
+		log.Errorf("解析JSON失败: %s", err.Error())
 		return nil
 	}
 	return data
