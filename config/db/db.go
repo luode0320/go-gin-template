@@ -104,12 +104,12 @@ func connectDB() {
 func migrate() {
 	// 可以传多个, 逗号拼接
 	Conn.AutoMigrate(&model.User{})
-	log.Infof("===========数据库表结构检查完成==============")
+	log.Infof("===========数据库表结构检查完成========")
 }
 
 // 数据库连接检查
 func connectionCheck() {
-	log.Infof("===========启动数据库连接检查任务==============")
+	log.Infof("===========启动数据库连接检查任务======")
 	go func() {
 		c := cron.New()
 		_ = c.AddFunc("0/30 * * * * ?", func() {

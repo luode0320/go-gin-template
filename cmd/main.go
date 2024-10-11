@@ -19,7 +19,7 @@ func init() {
 
 func main() {
 	// 版本
-	log.Infof("===========当前版本：%s==============", config.ServiceConfig.Version)
+	log.Infof("===========当前版本：%s============", config.ServiceConfig.Version)
 
 	// 设置环境debug,release,test
 	gin.SetMode(config.ServiceConfig.Web.Mode)
