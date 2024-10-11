@@ -22,7 +22,7 @@ func main() {
 	log.Infof("===========当前版本：%s==============", config.ServiceConfig.Version)
 
 	// 设置环境debug,release,test
-	gin.SetMode("release")
+	gin.SetMode(config.ServiceConfig.Web.Mode)
 
 	// 设置gin路由
 	router := routers.SetupRouter()
