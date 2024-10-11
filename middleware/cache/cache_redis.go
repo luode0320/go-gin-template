@@ -5,8 +5,8 @@ import (
 	"encoding/json"
 	"github.com/gin-gonic/gin"
 	"go-gin-template/common/response"
+	"go-gin-template/config/log"
 	"go-gin-template/config/redis"
-	"log"
 	"net/http"
 	"time"
 )
@@ -38,7 +38,7 @@ func Cache() gin.HandlerFunc {
 		// 如果有响应，将结果存入缓存
 		err = redis.Rdb.Set(ctx, key, c.Writer.(response.ResponseWriter).B.String(), expire).Err()
 		if err != nil {
-			log.Printf("缓存请求结果异常: %v", err)
+			log.Errorf("缓存请求结果异常: %v", err)
 		}
 	}
 }

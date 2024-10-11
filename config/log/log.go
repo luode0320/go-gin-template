@@ -85,8 +85,8 @@ func Info(message string) {
 	Logger.Info(message)
 }
 
-func Infof(tmp string, arg ...interface{}) {
-	Logger.Infof(tmp, arg...)
+func Infof(fmt string, arg ...interface{}) {
+	Logger.Infof(fmt, arg...)
 }
 
 // Warn 输出warm 级别的日志
@@ -94,17 +94,17 @@ func Warn(message string) {
 	Logger.Warn(message)
 }
 
-func Warmf(tmp string, arg ...interface{}) {
-	Logger.Warnf(tmp, arg...)
+func Warmf(fmt string, arg ...interface{}) {
+	Logger.Warnf(fmt, arg...)
 }
 
-// Error 输出error 级别的日志
+// Error 输出error 级别的日志, 不会退出程序
 func Error(message string) {
 	Logger.Error(message)
 }
 
-func Errorf(tmp string, arg ...interface{}) {
-	Logger.Errorf(tmp, arg...)
+func Errorf(fmt string, arg ...interface{}) {
+	Logger.Errorf(fmt, arg...)
 }
 
 // Panic 输出panic 级别的日志，打印完信息后会抛出panic中断程序，谨慎使用
@@ -112,8 +112,8 @@ func Panic(message string) {
 	Logger.Panic(message)
 }
 
-func Panicf(tmp string, arg ...interface{}) {
-	Logger.Panicf(tmp, arg...)
+func Panicf(fmt string, arg ...interface{}) {
+	Logger.Panicf(fmt, arg...)
 }
 
 // Fatal 输出fatal 级别的日志，打印完信息后会调用os.Exit退出服务，谨慎使用
@@ -121,6 +121,6 @@ func Fatal(message string) {
 	Logger.Fatal(message)
 }
 
-func Fatalf(tmp string, arg ...interface{}) {
-	Logger.Fatalf(tmp, arg...)
+func Fatalf(fmt string, arg ...interface{}) {
+	Logger.Fatalf(fmt, arg...)
 }
