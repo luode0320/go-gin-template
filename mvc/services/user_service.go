@@ -4,7 +4,7 @@ package services
 import (
 	_ "github.com/mattn/go-sqlite3"
 	"go-gin-template/config/db"
-	"go-gin-template/routers/model"
+	"go-gin-template/mvc/model"
 )
 
 type UserService struct{}

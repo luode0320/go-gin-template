@@ -7,7 +7,7 @@ import (
 	"github.com/robfig/cron"
 	"go-gin-template/config"
 	"go-gin-template/config/log"
-	"go-gin-template/routers/model"
+	"go-gin-template/mvc/model"
 	"gorm.io/gorm/logger"
 	syslog "log"
 	"os"
