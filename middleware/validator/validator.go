@@ -8,19 +8,11 @@ import (
 	"net/http"
 )
 
-// FormValidator 代表验证中间件
-type FormValidator struct {
-	validate *validator.Validate
-}
-
-// NewFormValidator 创建一个新的验证中间件实例
-func NewFormValidator() *FormValidator {
-	validate := validator.New()
-	return &FormValidator{validate: validate}
-}
+// 验证实例
+var validate = validator.New()
 
 // ValidateForm 用于验证json数据
-func (fv *FormValidator) ValidateForm(form interface{}) gin.HandlerFunc {
+func ValidateForm(form interface{}) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		if err := ctx.ShouldBind(form); err != nil {
 			log.Error(err.Error())
@@ -29,7 +21,7 @@ func (fv *FormValidator) ValidateForm(form interface{}) gin.HandlerFunc {
 			return
 		}
 
-		if err := fv.validate.Struct(form); err != nil {
+		if err := validate.Struct(form); err != nil {
 			log.Error(err.Error())
 			ctx.JSON(http.StatusBadRequest, response.FailByMsg(err.Error()))
 			ctx.Abort()
